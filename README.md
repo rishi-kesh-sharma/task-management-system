@@ -82,6 +82,15 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+## Frontend Setup (Vue)
+
+```bash
+cd frontend
+npm install
+npm run dev
+
+```
+
 ## Notes
 
 - **Development Mode:** Changes to the frontend will be automatically reflected in the browser during development.
