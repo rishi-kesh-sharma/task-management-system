@@ -1,6 +1,40 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import Logo from "@/assets/img/logo.png";
+import { reactive } from "vue";
+import axios from "axios";
+
+const router = useRouter();
+
+const form = reactive({
+  email: "",
+  password: "",
+});
+
+const handleSubmit = async () => {
+  const body = {
+    email: form.email,
+    password: form.password,
+  };
+  const response = await axios.post(`/api/user/login/`, body);
+  const data = response.data;
+  const profileResponse = await axios.get(`/api/user/profile`, {
+    headers: {
+      Authorization: `Bearer ${data.token.access}`,
+    },
+  });
+
+  // clear localstorage
+  localStorage.clear();
+  const token = JSON.stringify(data.token);
+  const profileData = JSON.stringify(profileResponse.data);
+
+  // set the items to localstorage
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", profileData);
+  localStorage.setItem("isAuthenticated", true);
+  window.location.href = "/";
+};
 </script>
 
 <template>
@@ -20,7 +54,7 @@ import Logo from "@/assets/img/logo.png";
             class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Sign in to your account
           </h1>
-          <form class="space-y-4 md:space-y-6" action="#">
+          <form class="space-y-4 md:space-y-6" @submit.prevent="handleSubmit">
             <div>
               <label
                 for="email"
@@ -28,6 +62,7 @@ import Logo from "@/assets/img/logo.png";
                 >Your email</label
               >
               <input
+                v-model="form.email"
                 type="email"
                 name="email"
                 id="email"
@@ -42,6 +77,7 @@ import Logo from "@/assets/img/logo.png";
                 >Password</label
               >
               <input
+                v-model="form.password"
                 type="password"
                 name="password"
                 id="password"
@@ -50,21 +86,6 @@ import Logo from "@/assets/img/logo.png";
                 required="" />
             </div>
             <div class="flex items-center justify-end">
-              <!-- <div class="flex items-start">
-                <div class="flex items-center h-5">
-                  <input
-                    id="remember"
-                    aria-describedby="remember"
-                    type="checkbox"
-                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                    required="" />
-                </div>
-                <div class="ml-3 text-sm">
-                  <label for="remember" class="text-gray-500 dark:text-gray-300"
-                    >Remember me</label
-                  >
-                </div>
-              </div> -->
               <RouterLink
                 to="/forgot-password"
                 class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"

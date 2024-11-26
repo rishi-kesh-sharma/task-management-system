@@ -1,6 +1,10 @@
 <script setup>
 import { RouterLink, useRoute } from "vue-router";
 import logo from "@/assets/img/logo.png";
+import ProfileAvatar from "@/components/ProfileAvatar.vue";
+
+const profileData = JSON.parse(localStorage.getItem("user"));
+const isAuthenticated = localStorage.getItem("isAuthenticated");
 
 const isActiveLink = (routePath) => {
   const route = useRoute();
@@ -63,6 +67,7 @@ const isActiveLink = (routePath) => {
                 >Add task</RouterLink
               >
               <RouterLink
+                v-if="!isAuthenticated"
                 to="/login"
                 :class="[
                   isActiveLink('/login')
@@ -75,6 +80,7 @@ const isActiveLink = (routePath) => {
                 ]"
                 >Login</RouterLink
               >
+              <ProfileAvatar v-else />
             </div>
           </div>
         </div>
