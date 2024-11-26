@@ -117,7 +117,7 @@ onMounted(async () => {
 
             <div class="mb-4">
               <label for="company" class="block text-gray-700 font-bold mb-2"
-                >Assigned_to</label
+                >Assigned to</label
               >
               <input
                 type="text"

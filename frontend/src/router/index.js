@@ -10,6 +10,7 @@ import SignupView from "@/views/SignupView.vue";
 import UpdateProfileView from "@/views/UpdateProfileView.vue";
 import ForgotPasswordView from "@/views/ForgotPasswordView.vue";
 import ResetPasswordView from "@/views/ResetPasswordView.vue";
+import ProfileView from "@/views/ProfileView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: "/reset-password",
       name: "reset password",
       component: ResetPasswordView,
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: ProfileView,
     },
     {
       path: "/profile/update",
@@ -70,6 +76,12 @@ const router = createRouter({
       component: NotFoundView,
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem("isAuthenticated");
+  if (to.name !== "login" && !isAuthenticated) next({ name: "login" });
+  else next();
 });
 
 export default router;

@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    'account',
-    'task'
+    'accounts',
+    'tasks'
 ]
 
 MIDDLEWARE = [
@@ -137,7 +137,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 # Email Configuration
 EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"

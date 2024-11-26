@@ -1,13 +1,5 @@
 <script setup>
-import { reactive } from "vue";
 const user = JSON.parse(localStorage.getItem("user"));
-const form = reactive({
-  email: user.email,
-  username: user.username,
-  bio: user.bio,
-  profile_picture: user.profile_picture,
-});
-console.log(form.profile_picture, "profile");
 </script>
 
 <template>
@@ -18,13 +10,15 @@ console.log(form.profile_picture, "profile");
         <div class="">
           <form>
             <div
-              class="w-full rounded-sm bg-[url('https://images.unsplash.com/photo-1449844908441-8829872d2607?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw2fHxob21lfGVufDB8MHx8fDE3MTA0MDE1NDZ8MA&ixlib=rb-4.0.3&q=80&w=1080')] bg-cover bg-center bg-no-repeat items-center py-[2rem]">
+              class="w-full rounded-sm bg-[url('https://images.unsplash.com/photo-1449844908441-8829872d2607?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw2fHxob21lfGVufDB8MHx8fDE3MTA0MDE1NDZ8MA&ixlib=rb-4.0.3&q=80&w=1080')] bg-cover bg-center bg-no-repeat items-center">
+              <!-- Profile Image -->
               <div
-                :style="`background:url(${user.profile_picture});`"
+                :style="`background:url(${user.profile_picture})`"
                 :class="`mx-auto flex justify-center w-[141px] h-[141px] bg-blue-300/20 rounded-full  bg-cover bg-center bg-no-repeat`">
                 <div
                   class="bg-white/90 rounded-full w-6 h-6 text-center ml-28 mt-4">
                   <input
+                    value="user.profile_picture"
                     type="file"
                     name="profile_picture"
                     id="profile_picture"
@@ -62,8 +56,8 @@ console.log(form.profile_picture, "profile");
                 >
                 <input
                   type="email"
-                  v-model="form.email"
                   name="email"
+                  :value="user.email"
                   id="email"
                   class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
                   placeholder="name@company.com" />
@@ -74,9 +68,9 @@ console.log(form.profile_picture, "profile");
                 >
                 <input
                   type="text"
-                  v-model="form.username"
                   name="username"
                   id="username"
+                  :value="user.username"
                   class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
                   placeholder="Username" />
               </div>
@@ -89,17 +83,12 @@ console.log(form.profile_picture, "profile");
                 >Your bio</label
               >
               <textarea
-                v-model="form.bio"
                 id="bio"
                 name="bio"
+                :value="user.bio"
                 rows="6"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Your bio here..."></textarea>
-            </div>
-
-            <div
-              class="w-full rounded-lg bg-primary mt-4 text-white text-lg font-semibold hover:bg-primary-dark">
-              <button type="submit" class="w-full p-4">Submit</button>
             </div>
           </form>
         </div>
