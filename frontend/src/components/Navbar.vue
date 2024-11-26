@@ -47,7 +47,7 @@ const isActiveLink = (routePath) => {
                   'py-2',
                   'rounded-md',
                 ]"
-                >tasks</RouterLink
+                >Tasks</RouterLink
               >
               <RouterLink
                 to="/tasks/add"

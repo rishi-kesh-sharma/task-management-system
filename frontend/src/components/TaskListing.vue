@@ -25,7 +25,7 @@ const truncatedDescription = computed(() => {
   <div class="bg-white rounded-xl shadow-md relative">
     <div class="p-4">
       <div class="mb-6">
-        <div class="text-gray-600 my-2">{{ task.type }}</div>
+        <div class="text-gray-600 my-2">{{ task.status }}</div>
         <h3 class="text-xl font-bold">{{ task.title }}</h3>
       </div>
 
@@ -40,7 +40,7 @@ const truncatedDescription = computed(() => {
         </button>
       </div>
 
-      <h3 class="text-primary mb-2">{{ task.salary }} / Year</h3>
+      <h3 class="text-primary mb-2">{{ task.assigned_to }}</h3>
 
       <div class="border border-gray-100 mb-5"></div>
 

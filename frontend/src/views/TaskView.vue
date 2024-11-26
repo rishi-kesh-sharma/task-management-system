@@ -17,7 +17,7 @@ const state = reactive({
   isLoading: true,
 });
 
-const deletetask = async () => {
+const deleteTask = async () => {
   try {
     const confirm = window.confirm(
       "Are you sure you want to delete this task?"
@@ -53,29 +53,23 @@ onMounted(async () => {
         <main>
           <div
             class="bg-white p-6 rounded-lg shadow-md text-center md:text-left">
-            <div class="text-gray-500 mb-4">{{ state.task.type }}</div>
+            <div class="text-gray-500 mb-4">{{ state.task.status }}</div>
             <h1 class="text-3xl font-bold mb-4">{{ state.task.title }}</h1>
             <div
               class="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
               <i class="pi pi-map-marker text-xl text-orange-700 mr-2"></i>
-              <p class="text-orange-700">{{ state.task.location }}</p>
+              <p class="text-orange-700">{{ state.task.due_date }}</p>
             </div>
           </div>
 
           <div class="bg-white p-6 rounded-lg shadow-md mt-6">
             <h3 class="text-primary-extra-dark text-lg font-bold mb-6">
-              task Description
+              Task Description
             </h3>
 
             <p class="mb-4">
               {{ state.task.description }}
             </p>
-
-            <h3 class="text-primary-extra-dark text-lg font-bold mb-2">
-              Salary
-            </h3>
-
-            <p class="mb-4">{{ state.task.salary }} / Year</p>
           </div>
         </main>
 
@@ -83,11 +77,11 @@ onMounted(async () => {
         <aside>
           <!-- Company Info -->
           <div class="bg-white p-6 rounded-lg shadow-md">
-            <h3 class="text-xl font-bold mb-6">Company Info</h3>
+            <h3 class="text-xl font-bold mb-6">Assignees</h3>
 
-            <h2 class="text-2xl">{{ state.task.company.name }}</h2>
+            <h2 class="text-2xl">{{ state.task.assigned_to }}</h2>
 
-            <p class="my-2">
+            <!-- <p class="my-2">
               {{ state.task.company.description }}
             </p>
 
@@ -103,7 +97,7 @@ onMounted(async () => {
 
             <p class="my-2 bg-primary-extra-light p-2 font-bold">
               {{ state.task.company.contactPhone }}
-            </p>
+            </p> -->
           </div>
 
           <!-- Manage -->
@@ -115,7 +109,7 @@ onMounted(async () => {
               >Edit task</RouterLink
             >
             <button
-              @click="deletetask"
+              @click="deleteTask"
               class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
               Delete task
             </button>
