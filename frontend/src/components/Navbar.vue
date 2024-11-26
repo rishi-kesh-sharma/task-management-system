@@ -9,7 +9,7 @@ const isActiveLink = (routePath) => {
 </script>
 
 <template>
-  <nav class="bg-primary-dark border-b border-green-500">
+  <nav class="bg-primary-dark border-b border-primary-extra-dark">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
       <div class="flex h-20 items-center justify-between">
         <div
@@ -61,6 +61,19 @@ const isActiveLink = (routePath) => {
                   'rounded-md',
                 ]"
                 >Add task</RouterLink
+              >
+              <RouterLink
+                to="/login"
+                :class="[
+                  isActiveLink('/login')
+                    ? 'bg-primary-extra-dark'
+                    : 'hover:bg-gray-900 hover:text-white',
+                  'text-white',
+                  'px-3',
+                  'py-2',
+                  'rounded-md',
+                ]"
+                >Login</RouterLink
               >
             </div>
           </div>
