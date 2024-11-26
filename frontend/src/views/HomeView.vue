@@ -6,6 +6,6 @@ import TaskListings from "@/components/TaskListings.vue";
 
 <template>
   <Hero />
-  <!-- <HomeCards /> -->
-  <!-- <TaskListings :limit="3" :showButton="true" /> -->
+  <HomeCards />
+  <TaskListings :limit="3" :showButton="true" />
 </template>
