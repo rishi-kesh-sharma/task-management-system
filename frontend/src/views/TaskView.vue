@@ -23,7 +23,7 @@ const deleteTask = async () => {
       "Are you sure you want to delete this task?"
     );
     if (confirm) {
-      await axios.delete(`/api/tasks/${taskId}`);
+      await axios.delete(`/api/task/${taskId}/`);
       toast.success("task Deleted Successfully");
       router.push("/tasks");
     }
@@ -35,7 +35,7 @@ const deleteTask = async () => {
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`/api/tasks/${taskId}`);
+    const response = await axios.get(`/api/task/${taskId}`);
     state.task = response.data;
   } catch (error) {
     console.error("Error fetching task", error);

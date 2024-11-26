@@ -34,18 +34,18 @@ const handleSubmit = async () => {
   };
 
   try {
-    const response = await axios.put(`/api/tasks/${taskId}`, updatedTask);
-    toast.success("task Updated Successfully");
+    const response = await axios.put(`/api/task/${taskId}/`, updatedTask);
+    toast.success("Task Updated Successfully");
     router.push(`/tasks/${response.data.id}`);
   } catch (error) {
     console.error("Error fetching task", error);
-    toast.error("task Was Not Updated");
+    toast.error("Task Was Not Updated");
   }
 };
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`/api/tasks/${taskId}`);
+    const response = await axios.get(`/api/task/${taskId}/`);
     state.task = response.data;
     // Populate inputs
     form.title = state.task.title;
@@ -93,9 +93,9 @@ onMounted(async () => {
                 name="status"
                 class="border rounded w-full py-2.5 px-3 mb-2"
                 required>
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
               </select>
             </div>
           </div>

@@ -7,7 +7,7 @@ import axios from "axios";
 const form = reactive({
   title: "",
   description: "",
-  status: "",
+  // status: "",
   due_date: "",
   assigned_to: "",
 });
@@ -18,13 +18,13 @@ const handleSubmit = async () => {
   const newTask = {
     title: form.title,
     description: form.description,
-    status: form.status,
+    // status: form.status,
     due_date: form.due_date,
     assigned_to: form.assigned_to,
   };
 
   try {
-    const response = await axios.post("/api/tasks", newTask);
+    const response = await axios.post("/api/task/", newTask);
     toast.success("task Added Successfully");
     router.push(`/tasks/${response.data.id}`);
   } catch (error) {
@@ -43,7 +43,7 @@ const handleSubmit = async () => {
           <h2 class="text-3xl text-center font-semibold mb-6">Add task</h2>
 
           <div class="grid grid-cols-2 gap-[1rem]">
-            <div class="mb-4">
+            <div class="mb-4 col-span-2">
               <label class="block text-gray-700 font-bold mb-2"
                 >Task Title</label
               >
@@ -56,7 +56,7 @@ const handleSubmit = async () => {
                 placeholder="eg. Create beautiful and intuitive UI"
                 required />
             </div>
-            <div class="mb-4">
+            <!-- <div class="mb-4">
               <label for="type" class="block text-gray-700 font-bold mb-2"
                 >Status</label
               >
@@ -66,11 +66,11 @@ const handleSubmit = async () => {
                 name="status"
                 class="border rounded w-full py-2.5 px-3 mb-2"
                 required>
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
               </select>
-            </div>
+            </div> -->
           </div>
 
           <div class="grid grid-cols-2 gap-x-[1rem]">
