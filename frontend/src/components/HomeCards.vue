@@ -4,9 +4,9 @@ import Card from "@/components/Card.vue";
 </script>
 
 <template>
-  <section class="py-4">
+  <section class="py-8">
     <div class="container-xl lg:container m-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-lg">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 py-4 rounded-lg">
         <Card>
           <h2 class="text-2xl font-bold">Tasks</h2>
           <p class="mt-2 mb-4">
@@ -14,8 +14,8 @@ import Card from "@/components/Card.vue";
           </p>
           <RouterLink
             to="/tasks"
-            class="inline-block bg-black text-white rounded-lg px-4 py-2 hover:bg-gray-700">
-            Browse tasks
+            class="inline-block bg-transparent text-primary border border-primary rounded-lg px-4 py-2 hover:bg-primary-dark hover:text-white">
+            Browse Tasks
           </RouterLink>
         </Card>
         <Card bg="bg-primary-extra-light">
@@ -23,8 +23,8 @@ import Card from "@/components/Card.vue";
           <p class="mt-2 mb-4">Organize Tasks and Manage Profile Seamlessly!</p>
           <RouterLink
             to="/tasks/add"
-            class="inline-block bg-primary text-white rounded-lg px-4 py-2 hover:bg-primary">
-            Add task
+            class="inline-block bg-primary text-white rounded-lg px-4 py-2 hover:bg-primary-dark">
+            Add Task
           </RouterLink>
         </Card>
       </div>

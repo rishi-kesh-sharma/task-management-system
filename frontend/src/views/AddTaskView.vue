@@ -35,12 +35,12 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <section class="bg-primary-extra-light">
+  <section class="bg-gray-50">
     <div class="container m-auto max-w-[900px] py-5">
       <div
         class="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
         <form @submit.prevent="handleSubmit">
-          <h2 class="text-3xl text-center font-semibold mb-6">Add task</h2>
+          <h2 class="text-3xl text-center font-semibold mb-6">Add Task</h2>
 
           <div class="grid grid-cols-2 gap-[1rem]">
             <div class="mb-4 col-span-2">
@@ -56,21 +56,6 @@ const handleSubmit = async () => {
                 placeholder="eg. Create beautiful and intuitive UI"
                 required />
             </div>
-            <!-- <div class="mb-4">
-              <label for="type" class="block text-gray-700 font-bold mb-2"
-                >Status</label
-              >
-              <select
-                id="status"
-                v-model="form.status"
-                name="status"
-                class="border rounded w-full py-2.5 px-3 mb-2"
-                required>
-                <option value="pending">Pending</option>
-                <option value="in_progress">In Progress</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div> -->
           </div>
 
           <div class="grid grid-cols-2 gap-x-[1rem]">
@@ -117,7 +102,7 @@ const handleSubmit = async () => {
 
           <div>
             <button
-              class="bg-primary hover:bg-primary text-white font-bold py-3 px-4 rounded-lg w-full focus:outline-none focus:shadow-outline"
+              class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-lg w-full focus:outline-none focus:shadow-outline"
               type="submit">
               Add Task
             </button>

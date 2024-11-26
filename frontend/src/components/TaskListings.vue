@@ -31,10 +31,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section class="bg-blue-50 px-4 py-10">
+  <section class="bg-gray-50 px-4 py-8">
     <div class="container-xl lg:container m-auto">
-      <h2 class="text-3xl font-bold text-primary mb-6 text-center">
-        Browse tasks
+      <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">
+        Browse Tasks
       </h2>
       <!-- Show loading spinner while loading is true -->
       <div v-if="state.isLoading" class="text-center text-gray-500 py-6">
@@ -43,7 +43,7 @@ onMounted(async () => {
 
       <!-- Shoe task listing when done loading -->
       <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <taskListing
+        <TaskListing
           v-for="task in state.tasks.slice(0, limit || state.tasks.length)"
           :key="task.id"
           :task="task" />
@@ -54,7 +54,7 @@ onMounted(async () => {
   <section v-if="showButton" class="m-auto max-w-lg my-10 px-6">
     <RouterLink
       to="/tasks"
-      class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
+      class="block bg-primary-dark text-white text-center py-4 px-6 rounded-xl hover:bg-primary-extra-dark"
       >View All tasks</RouterLink
     >
   </section>

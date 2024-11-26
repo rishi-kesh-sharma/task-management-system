@@ -20,9 +20,9 @@ const isActiveLink = (routePath) => {
           class="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
           <!-- Logo -->
           <RouterLink class="flex flex-shrink-0 items-center mr-4" to="/">
-            <img class="h-10 w-auto" :src="logo" alt="Vue tasks" />
+            <img class="h-10 w-auto" :src="logo" alt="Taskify" />
             <span class="hidden md:block text-white text-2xl font-bold ml-2"
-              >Vue tasks</span
+              >Taskify</span
             >
           </RouterLink>
           <div class="md:ml-auto">
@@ -32,7 +32,7 @@ const isActiveLink = (routePath) => {
                 :class="[
                   isActiveLink('/')
                     ? 'bg-primary-extra-dark'
-                    : 'hover:bg-gray-900 hover:text-white',
+                    : 'hover:bg-primary-extra-dark hover:text-white',
                   'text-white',
                   'px-3',
                   'py-2',
@@ -45,7 +45,7 @@ const isActiveLink = (routePath) => {
                 :class="[
                   isActiveLink('/tasks')
                     ? 'bg-primary-extra-dark'
-                    : 'hover:bg-gray-900 hover:text-white',
+                    : 'hover:bg-primary-extra-dark hover:text-white',
                   'text-white',
                   'px-3',
                   'py-2',
@@ -58,13 +58,13 @@ const isActiveLink = (routePath) => {
                 :class="[
                   isActiveLink('/tasks/add')
                     ? 'bg-primary-extra-dark'
-                    : 'hover:bg-gray-900 hover:text-white',
+                    : 'hover:bg-primary-extra-dark hover:text-white',
                   'text-white',
                   'px-3',
                   'py-2',
                   'rounded-md',
                 ]"
-                >Add task</RouterLink
+                >Add Task</RouterLink
               >
               <RouterLink
                 v-if="!isAuthenticated"
@@ -72,7 +72,7 @@ const isActiveLink = (routePath) => {
                 :class="[
                   isActiveLink('/login')
                     ? 'bg-primary-extra-dark'
-                    : 'hover:bg-gray-900 hover:text-white',
+                    : 'hover:bg-primary-extra-dark hover:text-white',
                   'text-white',
                   'px-3',
                   'py-2',

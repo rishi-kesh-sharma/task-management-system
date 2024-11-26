@@ -1,7 +1,7 @@
 <script setup>
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 import BackButton from "@/components/BackButton.vue";
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, computed } from "vue";
 import { useRoute, RouterLink, useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 import axios from "axios";
@@ -15,6 +15,25 @@ const taskId = route.params.id;
 const state = reactive({
   task: {},
   isLoading: true,
+});
+
+const statusData = computed(() => {
+  let temp = {
+    label: "Pending",
+    color: "#B8860B",
+  };
+  if (state.task?.status === "in_progress") {
+    temp = {
+      label: "In Progress",
+      color: "blue",
+    };
+  } else if (state.task?.status === "completed") {
+    temp = {
+      label: "Completed",
+      color: "green",
+    };
+  }
+  return temp;
 });
 
 const deleteTask = async () => {
@@ -47,17 +66,21 @@ onMounted(async () => {
 
 <template>
   <BackButton />
-  <section v-if="!state.isLoading" class="bg-primary-extra-light">
+  <section v-if="!state.isLoading" class="bg-gray-50">
     <div class="container m-auto py-10 px-6">
       <div class="grid grid-cols-1 md:grid-cols-70/30 w-full gap-6">
         <main>
           <div
             class="bg-white p-6 rounded-lg shadow-md text-center md:text-left">
-            <div class="text-gray-500 mb-4">{{ state.task.status }}</div>
+            <div
+              :style="`color:${statusData.color}; border:1px solid ${statusData.color}`"
+              class="text-gray-600 my-2 border text-center rounded-full max-w-[110px] py-1 mb-6">
+              {{ statusData.label }}
+            </div>
             <h1 class="text-3xl font-bold mb-4">{{ state.task.title }}</h1>
             <div
               class="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
-              <i class="pi pi-map-marker text-xl text-orange-700 mr-2"></i>
+              <i class="pi pi-calendar text-xl text-orange-700 mr-2"></i>
               <p class="text-orange-700">{{ state.task.due_date }}</p>
             </div>
           </div>
@@ -80,24 +103,6 @@ onMounted(async () => {
             <h3 class="text-xl font-bold mb-6">Assignees</h3>
 
             <h2 class="text-2xl">{{ state.task.assigned_to }}</h2>
-
-            <!-- <p class="my-2">
-              {{ state.task.company.description }}
-            </p>
-
-            <hr class="my-4" />
-
-            <h3 class="text-xl">Contact Email:</h3>
-
-            <p class="my-2 bg-primary-extra-light p-2 font-bold">
-              {{ state.task.company.contactEmail }}
-            </p>
-
-            <h3 class="text-xl">Contact Phone:</h3>
-
-            <p class="my-2 bg-primary-extra-light p-2 font-bold">
-              {{ state.task.company.contactPhone }}
-            </p> -->
           </div>
 
           <!-- Manage -->
@@ -105,12 +110,12 @@ onMounted(async () => {
             <h3 class="text-xl font-bold mb-6">Manage task</h3>
             <RouterLink
               :to="`/tasks/edit/${state.task.id}`"
-              class="bg-primary hover:bg-primary text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
+              class="bg-transparent hover:bg-primary-dark hover:text-white text-primary-dark text-center font-semibold py-2 px-4 rounded-lg w-full focus:outline-none focus:shadow-outline mt-4 block border border-primary-dark"
               >Edit task</RouterLink
             >
             <button
               @click="deleteTask"
-              class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
+              class="bg-transparent hover:bg-red-600 text-red-600 hover:text-white border border-red-600 font-semibold py-2 px-4 rounded-lg w-full focus:outline-none focus:shadow-outline mt-4 block">
               Delete task
             </button>
           </div>
@@ -120,6 +125,6 @@ onMounted(async () => {
   </section>
 
   <div v-else class="text-center text-gray-500 py-6">
-    <PulseLoader />
+    <PulseLoader color="blue" />
   </div>
 </template>

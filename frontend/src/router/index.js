@@ -80,7 +80,16 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("isAuthenticated");
+  if (
+    !isAuthenticated &&
+    (to.name === "signup" ||
+      to.name === "forgot password" ||
+      to.name === "reset password")
+  ) {
+    next();
+  }
   if (to.name !== "login" && !isAuthenticated) next({ name: "login" });
+  // else if (to.name !== "signup" && !isAuthenticated) next({ name: "signup" });
   else next();
 });
 
