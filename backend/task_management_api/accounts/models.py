@@ -7,8 +7,10 @@ class UserManager(BaseUserManager):
       """
       Creates and saves a User with the given email, name, tc and password.
       """
+      print(profile_picture) 
       if not email:
           raise ValueError('User must have an email address')
+
 
       user = self.model(
           email=self.normalize_email(email),
@@ -43,7 +45,7 @@ class User(AbstractBaseUser):
       max_length=255,
       unique=True,
   )
-  username = models.CharField(max_length=200)
+  username = models.CharField(max_length=200,unique=True)
   bio = models.TextField()
   profile_picture = models.TextField()
   is_active = models.BooleanField(default=True)

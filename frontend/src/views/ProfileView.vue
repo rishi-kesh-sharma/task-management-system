@@ -1,4 +1,5 @@
 <script setup>
+import { RouterLink } from "vue-router";
 const user = JSON.parse(localStorage.getItem("user"));
 </script>
 
@@ -9,8 +10,13 @@ const user = JSON.parse(localStorage.getItem("user"));
         class="lg:w-[88%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-5 rounded-xl h-fit self-center dark:bg-gray-800/40">
         <form>
           <div
-            class="w-full rounded-sm min-h-[30vh] bg-[url('https://images.unsplash.com/photo-1449844908441-8829872d2607?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw2fHxob21lfGVufDB8MHx8fDE3MTA0MDE1NDZ8MA&ixlib=rb-4.0.3&q=80&w=1080')] bg-cover bg-center bg-no-repeat flex items-center">
+            class="relative w-full rounded-sm min-h-[30vh] bg-[url('https://images.unsplash.com/photo-1449844908441-8829872d2607?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw2fHxob21lfGVufDB8MHx8fDE3MTA0MDE1NDZ8MA&ixlib=rb-4.0.3&q=80&w=1080')] bg-cover bg-center bg-no-repeat flex items-center">
             <!-- Profile Image -->
+            <RouterLink
+              to="/profile/update"
+              class="absolute h-10 w-10 z-100 bg-gray-200 rounded-full top-0 right-0 flex items-center justify-center cursor-pointer m-2">
+              <i class="pi pi-user-edit text-primary-dark text-2xl"></i>
+            </RouterLink>
             <div
               :style="`background:url(${user.profile_picture})`"
               :class="`mx-auto flex justify-center items-center w-[141px] h-[141px] bg-blue-300/20 rounded-full  bg-cover bg-center bg-no-repeat`">
@@ -20,6 +26,7 @@ const user = JSON.parse(localStorage.getItem("user"));
                   value="user.profile_picture"
                   type="file"
                   name="profile_picture"
+                  disabled
                   id="profile_picture"
                   hidden
                   required />
@@ -54,6 +61,7 @@ const user = JSON.parse(localStorage.getItem("user"));
               <input
                 type="email"
                 name="email"
+                disabled
                 :value="user.email"
                 id="email"
                 class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
@@ -64,6 +72,7 @@ const user = JSON.parse(localStorage.getItem("user"));
               <input
                 type="text"
                 name="username"
+                disabled
                 id="username"
                 :value="user.username"
                 class="mt-2 p-4 w-full border-2 rounded-lg dark:text-gray-200 dark:border-gray-600 dark:bg-gray-800"
@@ -80,6 +89,7 @@ const user = JSON.parse(localStorage.getItem("user"));
             <textarea
               id="bio"
               name="bio"
+              disabled
               :value="user.bio"
               rows="6"
               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

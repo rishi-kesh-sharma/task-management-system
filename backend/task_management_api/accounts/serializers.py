@@ -19,11 +19,16 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
   def validate(self, attrs):
     password = attrs.get('password')
     password2 = attrs.get('password2')
+    print(attrs)
+    if not attrs.profile_picture or attrs.profile_picture=="":
+      attrs.profile_picture='https://i.pravatar.cc/300'
     if password != password2:
       raise serializers.ValidationError("Password and Confirm Password doesn't match")
     return attrs
 
   def create(self, validate_data):
+    if not validate_data.profile_picture:
+      validate_data.profile_picture='https://i.pravatar.cc/300'
     return User.objects.create_user(**validate_data)
 
 class UserLoginSerializer(serializers.ModelSerializer):
@@ -105,3 +110,49 @@ class UserPasswordResetSerializer(serializers.Serializer):
       PasswordResetTokenGenerator().check_token(user, token)
       raise serializers.ValidationError('Token is not Valid or Expired')
   
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+  # We are writing this because we need confirm password field in our Registration Request
+  class Meta:
+      model = User
+      fields=['email', 'username','bio','profile_picture']
+  def validate(self, attrs):
+    email = attrs.get('email') 
+    username = attrs.get('username')
+    bio = attrs.get('bio')
+    profile_picture = attrs.get('profile_picture')
+    user = self.context.get('user')
+
+    if user.email!=email:
+      user.email=email
+
+    if user.username!=username:
+      user.username=username
+
+
+    user.bio=bio
+    user.profile_picture=profile_picture
+
+    user.save()
+    return attrs
+    
+
+
+
+class UserProfilePictureUploadSerializer(serializers.ModelSerializer):
+  # We are writing this because we need confirm password field in our Registration Request
+  class Meta:
+      model = User
+      fields=['profile_picture']
+
+  def validate(self, attrs):
+    profile_picture = attrs.get('profile_picture')
+    user = self.context.get('user')
+    print(user,'user')
+    if not profile_picture:
+      raise serializers.ValidationError("Profile Picture is not provided")
+  
+    user.profile_picture=profile_picture
+    print(user)
+    user.save()
+    return attrs

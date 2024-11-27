@@ -1,7 +1,8 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from accounts.serializers import SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, UserPasswordResetSerializer, UserProfileSerializer, UserRegistrationSerializer
+from accounts.serializers import SendPasswordResetEmailSerializer, UserChangePasswordSerializer, UserLoginSerializer, UserPasswordResetSerializer, UserProfileSerializer, UserRegistrationSerializer,UserProfileUpdateSerializer,UserProfilePictureUploadSerializer
+
 from django.contrib.auth import authenticate
 from accounts.renderers import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -18,6 +19,9 @@ def get_tokens_for_user(user):
 class UserRegistrationView(APIView):
   renderer_classes = [UserRenderer]
   def post(self, request, format=None):
+    if not request.data.get("profile_picture") or request.data.get('profile_picture')=="":
+      request.data.profile_picture='https://i.pravatar.cc/300'
+    print(request.data)
     serializer = UserRegistrationSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     user = serializer.save()
@@ -68,3 +72,27 @@ class UserPasswordResetView(APIView):
     return Response({'msg':'Password Reset Successfully'}, status=status.HTTP_200_OK)
 
 
+
+class UserProfileUpdateView(APIView):
+  permission_classes=[IsAuthenticated]
+  renderer_classes = [UserRenderer]
+
+  def put(self, request, format=None):
+    serializer = UserProfileUpdateSerializer(data=request.data,context={
+      'user':request.user
+    })
+    serializer.is_valid(raise_exception=True)
+    return Response({ 'msg':'Profile Updated Successfully'}, status=status.HTTP_201_CREATED)
+  
+
+
+class UserProfilePictureUploadView(APIView):
+  renderer_classes = [UserRenderer]
+  permission_classes = [IsAuthenticated]
+  def put(self, request, format=None):
+    print(request.data)
+    serializer = UserProfilePictureUploadSerializer(data=request.data,context={'user':request.user})
+    serializer.is_valid(raise_exception=True)
+    # user = serializer.save()
+    # return Response("hello")
+    return Response({'data':request.data, 'msg':'Image Uploaded Successfully'}, status=status.HTTP_201_CREATED)

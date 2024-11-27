@@ -1,6 +1,57 @@
 <script setup>
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import Logo from "@/assets/img/logo.png";
+import { reactive } from "vue";
+import { useToast } from "vue-toastification";
+import axios from "axios";
+
+const toast = useToast();
+
+const form = reactive({
+  email: "",
+  username: "",
+  bio: "",
+  profile_picture: "",
+  password: "",
+  password2: "",
+});
+
+const handleSubmit = async () => {
+  try {
+    const body = {
+      email: form.email,
+      username: form.username,
+      bio: form.bio,
+      profile_picture: form.profile_picture,
+      password: form.password,
+      password2: form.password2,
+    };
+    const response = await axios.post(`/api/user/register/`, body);
+    const data = response.data;
+    const profileResponse = await axios.get(`/api/user/profile`, {
+      headers: {
+        Authorization: `Bearer ${data.token.access}`,
+      },
+    });
+    console.log(data, "data");
+
+    // clear localstorage
+    localStorage.clear();
+    const token = JSON.stringify(data.token);
+    const profileData = JSON.stringify(profileResponse.data);
+
+    // set the items to localstorage
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", profileData);
+    localStorage.setItem("isAuthenticated", true);
+    window.location.href = "/";
+  } catch (err) {
+    toast.error(
+      err.response.data.errors.non_field_errors[0] || "Error occurred"
+    );
+    console.log(err.response.data.errors.non_field_errors[0], "errors");
+  }
+};
 </script>
 
 <template>
@@ -20,7 +71,7 @@ import Logo from "@/assets/img/logo.png";
             class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Create a new account
           </h1> -->
-          <form class="space-y-2 md:space-y-4" action="#">
+          <form class="space-y-2 md:space-y-4" @submit.prevent="handleSubmit">
             <div class="grid md:grid-cols-2 gap-[1rem]">
               <div>
                 <label
@@ -29,6 +80,7 @@ import Logo from "@/assets/img/logo.png";
                   >Your email</label
                 >
                 <input
+                  v-model="form.email"
                   type="email"
                   name="email"
                   id="email"
@@ -43,6 +95,7 @@ import Logo from "@/assets/img/logo.png";
                   >Your username</label
                 >
                 <input
+                  v-model="form.username"
                   type="text"
                   name="username"
                   id="username"
@@ -59,6 +112,7 @@ import Logo from "@/assets/img/logo.png";
               >
               <textarea
                 id="bio"
+                v-model="form.bio"
                 name="bio"
                 rows="4"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -73,6 +127,7 @@ import Logo from "@/assets/img/logo.png";
                   >Password</label
                 >
                 <input
+                  v-model="form.password"
                   type="password"
                   name="password"
                   id="password"
@@ -87,7 +142,8 @@ import Logo from "@/assets/img/logo.png";
                   >Confirm Password</label
                 >
                 <input
-                  type="password2"
+                  v-model="form.password2"
+                  type="password"
                   name="password2"
                   id="password2"
                   placeholder="••••••••"

@@ -1,10 +1,10 @@
 <script setup>
-import { RouterLink, useRouter } from "vue-router";
 import Logo from "@/assets/img/logo.png";
 import { reactive } from "vue";
+import { useToast } from "vue-toastification";
 import axios from "axios";
 
-const router = useRouter();
+const toast = useToast();
 
 const form = reactive({
   email: "",
@@ -12,28 +12,36 @@ const form = reactive({
 });
 
 const handleSubmit = async () => {
-  const body = {
-    email: form.email,
-    password: form.password,
-  };
-  const response = await axios.post(`/api/user/login/`, body);
-  const data = response.data;
-  const profileResponse = await axios.get(`/api/user/profile`, {
-    headers: {
-      Authorization: `Bearer ${data.token.access}`,
-    },
-  });
+  try {
+    const body = {
+      email: form.email,
+      password: form.password,
+    };
+    const response = await axios.post(`/api/user/login/`, body);
+    const data = response.data;
+    const profileResponse = await axios.get(`/api/user/profile`, {
+      headers: {
+        Authorization: `Bearer ${data.token.access}`,
+      },
+    });
+    console.log(data, "data");
 
-  // clear localstorage
-  localStorage.clear();
-  const token = JSON.stringify(data.token);
-  const profileData = JSON.stringify(profileResponse.data);
+    // clear localstorage
+    localStorage.clear();
+    const token = JSON.stringify(data.token);
+    const profileData = JSON.stringify(profileResponse.data);
 
-  // set the items to localstorage
-  localStorage.setItem("token", token);
-  localStorage.setItem("user", profileData);
-  localStorage.setItem("isAuthenticated", true);
-  window.location.href = "/";
+    // set the items to localstorage
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", profileData);
+    localStorage.setItem("isAuthenticated", true);
+    window.location.href = "/";
+  } catch (err) {
+    toast.error(
+      err.response.data.errors.non_field_errors[0] || "Error occurred"
+    );
+    console.log(err.response.data.errors.non_field_errors[0], "errors");
+  }
 };
 </script>
 
