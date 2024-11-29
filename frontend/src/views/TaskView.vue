@@ -43,12 +43,12 @@ const deleteTask = async () => {
     );
     if (confirm) {
       await axios.delete(`/api/task/${taskId}/`);
-      toast.success("task Deleted Successfully");
+      toast.success("Task Deleted Successfully");
       router.push("/tasks");
     }
   } catch (error) {
     console.error("Error deleting task", error);
-    toast.error("task Not Deleted");
+    toast.error("Task Not Deleted");
   }
 };
 

@@ -41,8 +41,12 @@ const handleSubmit = async () => {
     toast.success("Profile Updated Successfully");
     window.location.href = "/profile";
   } catch (error) {
-    console.error("Error fetching user", error);
-    toast.error("User Was Not Updated");
+    let errors = Object.entries(error.response.data.errors);
+    errors = errors.flat(Infinity);
+    console.log(errors, "errors");
+    const errorString = `${errors[1]}`;
+    console.log("Error fetching user", error.response.data.errors);
+    toast.error(errorString, "User Was Not Updated");
   }
 };
 
